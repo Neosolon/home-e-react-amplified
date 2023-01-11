@@ -7,6 +7,7 @@ export const getTodo = /* GraphQL */ `
       id
       name
       description
+      owner
       createdAt
       updatedAt
     }
@@ -23,6 +24,44 @@ export const listTodos = /* GraphQL */ `
         id
         name
         description
+        owner
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getOrder = /* GraphQL */ `
+  query GetOrder($id: ID!) {
+    getOrder(id: $id) {
+      id
+      customerID
+      accountRepresentativeID
+      status
+      amount
+      date
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listOrders = /* GraphQL */ `
+  query ListOrders(
+    $filter: ModelOrderFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        customerID
+        accountRepresentativeID
+        status
+        amount
+        date
+        owner
         createdAt
         updatedAt
       }

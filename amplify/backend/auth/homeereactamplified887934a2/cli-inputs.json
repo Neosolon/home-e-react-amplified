@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "homeereactamplified113cd50f_identitypool_113cd50f",
+    "identityPoolName": "homeereactamplified887934a2_identitypool_887934a2",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "homeer113cd50f",
-    "userPoolName": "homeereactamplified113cd50f_userpool_113cd50f",
+    "resourceNameTruncated": "homeer887934a2",
+    "userPoolName": "homeereactamplified887934a2_userpool_887934a2",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -20,7 +20,9 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-      "email"
+      "email",
+      "name",
+      "preferred_username"
     ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
@@ -31,15 +33,16 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "homeer113cd50f_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "homeer887934a2_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "113cd50f",
-    "resourceName": "homeereactamplified113cd50f",
+    "sharedId": "887934a2",
+    "resourceName": "homeereactamplified887934a2",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "default",
     "usernameAttributes": [
       "email"
     ],
+    "triggers": {},
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
