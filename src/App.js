@@ -12,19 +12,25 @@ import {
   Text,
   TextField,
   View,
+  ThemeProvider,
+  Image
 } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import { 
-  LandingPage 
+  LandingPage,
+  NavBarAlt,
+  studioTheme
 } from './ui-components';
 import awsExports from "./aws-exports";
-Amplify.configure(awsExports);
+import logo from "./logo.svg";
 
+Amplify.configure(awsExports);
 const initialState = { name: "", description: "" };
 //todo test if you can import custom mutations and queries and execute those. Then print value in console
 const App = ({ signOut, user }) => {
   const [formState, setFormState] = useState(initialState);
   const [todos, setTodos] = useState([]);
+  const [showProfileCard, setShowProfileCard] = useState("none");
 
   useEffect(() => {
     fetchTodos();
@@ -34,6 +40,9 @@ const App = ({ signOut, user }) => {
     setFormState({ ...formState, [key]: value });
   }
 
+  useEffect(() =>{
+    return
+  }, [showProfileCard])
   async function fetchTodos() {
     try {
       const todoData = await API.graphql(graphqlOperation(listTodos));
@@ -96,13 +105,35 @@ const App = ({ signOut, user }) => {
     return content
   }
 
+  function onProfileIconClick () {
+    if (showProfileCard == "none"){
+      setShowProfileCard("flex");
+    }else if (showProfileCard == "flex"){
+      setShowProfileCard("none");
+    }
+  }
+
+  function ProfileIcon () {
+    return (
+      <Image alt="Home E Logo" src={logo} onClick={onProfileIconClick} />
+    )
+  }
+
   return (
     <Authenticator variation="modal" loginMechanisms={['email']}>
       {({ signOut, user }) => (
         //landingPage.NavBarAlt
         
           
-            <LandingPage pageContents={landingPageContent(signOut)} />
+            <ThemeProvider theme={studioTheme}>
+              <View>
+                <NavBarAlt  overrides={{"DashProfileAndCardAlt": {showProfileCard: showProfileCard, profileIconContainer: ProfileIcon() }}}  width={"100vw"}/>
+                <Button style={styles.button} onClick={signOut}>
+                  Sign out
+                </Button>
+              </View>
+              {/* <LandingPage pageContents={landingPageContent(signOut)} /> */}
+            </ThemeProvider>
           
         
       )}
@@ -121,17 +152,20 @@ const styles = {
   },
   todo: { marginBottom: 15 },
   input: {
-    border: "none",
-    backgroundColor: "#ddd",
+    // border: "none",
     marginBottom: 10,
     padding: 8,
     fontSize: 18,
   },
-  todoName: { fontSize: 20, fontWeight: "bold" },
-  todoDescription: { marginBottom: 0 },
+  todoName: { 
+    fontSize: 20, 
+    fontWeight: "bold" 
+  },
+  todoDescription: { 
+    marginBottom: 0 , marginLeft: '1em'
+  },
   button: {
-    backgroundColor: "black",
-    color: "white",
+    // color: "white",
     outline: "none",
     fontSize: 18,
     padding: "12px 0px",
