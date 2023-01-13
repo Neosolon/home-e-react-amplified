@@ -7,8 +7,7 @@
 import * as React from "react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { ButtonProps, FlexProps, IconProps, ImageProps, TextProps } from "@aws-amplify/ui-react";
-import { DashProfileAndSearchProps } from "./DashProfileAndSearch";
-import { SyntheticEvent } from "react";
+import { DashProfileProps } from "./DashProfile";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type NavBarAltOverridesProps = {
     NavBarAlt?: PrimitiveOverrideProps<FlexProps>;
@@ -20,11 +19,9 @@ export declare type NavBarAltOverridesProps = {
     ButtonSecond?: PrimitiveOverrideProps<ButtonProps>;
     ButtonThird?: PrimitiveOverrideProps<ButtonProps>;
     HamburgerDash?: PrimitiveOverrideProps<IconProps>;
-    DashProfileAndSearch?: DashProfileAndSearchProps;
+    DashProfile?: DashProfileProps;
 } & EscapeHatchProps;
 export declare type NavBarAltProps = React.PropsWithChildren<Partial<FlexProps> & {
-    onClick?: (event: SyntheticEvent) => void;
-} & {
     property1?: "Default";
 } & {
     overrides?: NavBarAltOverridesProps | undefined | null;

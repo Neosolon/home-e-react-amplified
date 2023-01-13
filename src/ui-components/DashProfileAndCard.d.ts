@@ -6,15 +6,16 @@
 
 import * as React from "react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { ProfileCardProps } from "./ProfileCard";
+import { DashProfileProps } from "./DashProfile";
 import { ViewProps } from "@aws-amplify/ui-react";
-import { NavBarAltProps } from "./NavBarAlt";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type LandingPageOverridesProps = {
-    LandingPage?: PrimitiveOverrideProps<ViewProps>;
-    PageContents?: PrimitiveOverrideProps<ViewProps>;
-    NavBarAlt?: NavBarAltProps;
+export declare type DashProfileAndCardOverridesProps = {
+    DashProfileAndCard?: PrimitiveOverrideProps<ViewProps>;
+    ProfileCard?: ProfileCardProps;
+    DashProfile?: DashProfileProps;
 } & EscapeHatchProps;
-export declare type LandingPageProps = React.PropsWithChildren<Partial<ViewProps> & {
-    overrides?: LandingPageOverridesProps | undefined | null;
+export declare type DashProfileAndCardProps = React.PropsWithChildren<Partial<ViewProps> & {
+    overrides?: DashProfileAndCardOverridesProps | undefined | null;
 }>;
-export default function LandingPage(props: LandingPageProps): React.ReactElement;
+export default function DashProfileAndCard(props: DashProfileAndCardProps): React.ReactElement;

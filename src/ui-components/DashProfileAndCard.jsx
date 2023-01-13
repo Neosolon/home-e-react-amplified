@@ -7,59 +7,53 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import ProfileCard from "./ProfileCard";
+import DashProfile from "./DashProfile";
 import { View } from "@aws-amplify/ui-react";
-import NavBarAlt from "./NavBarAlt";
-export default function LandingPage(props) {
+export default function DashProfileAndCard(props) {
   const { overrides, ...rest } = props;
   return (
     <View
-      width="1731px"
-      height="966px"
+      width="433px"
+      height="45px"
       display="block"
       gap="unset"
       alignItems="unset"
       justifyContent="unset"
-      overflow="hidden"
       position="relative"
       padding="0px 0px 0px 0px"
-      backgroundColor="rgba(255,255,255,1)"
-      {...getOverrideProps(overrides, "LandingPage")}
+      {...getOverrideProps(overrides, "DashProfileAndCard")}
       {...rest}
     >
-      <View
-        width="1731px"
-        height="874px"
-        display="block"
-        gap="unset"
-        alignItems="unset"
-        justifyContent="unset"
-        overflow="hidden"
-        position="absolute"
-        top="9.52%"
-        bottom="0%"
-        left="0%"
-        right="0%"
-        padding="0px 0px 0px 0px"
-        backgroundColor="rgba(174,179,183,1)"
-        {...getOverrideProps(overrides, "PageContents")}
-      ></View>
-      <NavBarAlt
+      <ProfileCard
         display="flex"
-        gap="30px"
-        direction="row"
-        width="1731px"
+        gap="24px"
+        direction="column"
+        width="unset"
         height="unset"
-        justifyContent="center"
+        justifyContent="flex-start"
+        alignItems="center"
+        position="absolute"
+        top="62px"
+        right="0px"
+        padding="24px 24px 24px 24px"
+        backgroundColor="rgba(255,255,255,1)"
+        {...getOverrideProps(overrides, "ProfileCard")}
+      ></ProfileCard>
+      <DashProfile
+        display="flex"
+        gap="32px"
+        direction="row"
+        width="433px"
+        height="unset"
+        justifyContent="space-between"
         alignItems="center"
         position="absolute"
         top="0px"
-        left="0%"
-        right="0%"
-        padding="19px 30px 19px 30px"
-        backgroundColor="rgba(4,52,149,1)"
-        property1="Default"
-        {...getOverrideProps(overrides, "NavBarAlt")}
-      ></NavBarAlt>
+        left="0px"
+        padding="0px 15px 0px 0px"
+        {...getOverrideProps(overrides, "DashProfile")}
+      ></DashProfile>
     </View>
   );
 }

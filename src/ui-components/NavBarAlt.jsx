@@ -10,12 +10,11 @@ import {
   getOverrideProps,
   getOverridesFromVariants,
   mergeVariantsAndOverrides,
-  useNavigateAction,
 } from "@aws-amplify/ui-react/internal";
 import { Button, Flex, Icon, Image, Text } from "@aws-amplify/ui-react";
-import DashProfileAndSearch from "./DashProfileAndSearch";
+import DashProfile from "./DashProfile";
 export default function NavBarAlt(props) {
-  const { onClick, overrides: overridesProp, ...rest } = props;
+  const { overrides: overridesProp, ...rest } = props;
   const variants = [
     {
       overrides: {
@@ -27,7 +26,7 @@ export default function NavBarAlt(props) {
         ButtonThird: {},
         HamburgerDash: {},
         DashButtonContainer: {},
-        DashProfileAndSearch: {},
+        DashProfile: {},
         NavBarAlt: {},
       },
       variantValues: { property1: "Default" },
@@ -37,17 +36,16 @@ export default function NavBarAlt(props) {
     getOverridesFromVariants(variants, props),
     overridesProp || {}
   );
-  const logoDashContainerOnClick = useNavigateAction({ type: "reload" });
   return (
     <Flex
-      gap="20px"
+      gap="30px"
       direction="row"
-      width="unset"
+      width="1448px"
       height="unset"
-      justifyContent="center"
+      justifyContent="flex-start"
       alignItems="center"
       position="relative"
-      padding="24px 32px 24px 32px"
+      padding="19px 30px 19px 30px"
       backgroundColor="rgba(4,52,149,1)"
       display="flex"
       {...getOverrideProps(overrides, "NavBarAlt")}
@@ -64,9 +62,6 @@ export default function NavBarAlt(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         display="flex"
-        onClick={() => {
-          logoDashContainerOnClick();
-        }}
         {...getOverrideProps(overrides, "LogoDashContainer")}
       >
         <Image
@@ -109,11 +104,13 @@ export default function NavBarAlt(props) {
       <Flex
         gap="40px"
         direction="row"
-        width="806px"
-        height="unset"
+        width="unset"
+        height="54px"
         justifyContent="flex-start"
         alignItems="center"
-        shrink="0"
+        grow="1"
+        shrink="1"
+        basis="0"
         position="relative"
         padding="0px 0px 0px 0px"
         display="flex"
@@ -163,18 +160,19 @@ export default function NavBarAlt(props) {
           {...getOverrideProps(overrides, "HamburgerDash")}
         ></Icon>
       </Flex>
-      <DashProfileAndSearch
+      <DashProfile
+        display="flex"
+        gap="32px"
+        direction="row"
         width="433px"
-        height="45px"
-        display="block"
-        gap="unset"
-        alignItems="unset"
-        justifyContent="unset"
+        height="unset"
+        justifyContent="space-between"
+        alignItems="center"
         shrink="0"
         position="relative"
-        padding="0px 0px 0px 0px"
-        {...getOverrideProps(overrides, "DashProfileAndSearch")}
-      ></DashProfileAndSearch>
+        padding="0px 15px 0px 0px"
+        {...getOverrideProps(overrides, "DashProfile")}
+      ></DashProfile>
     </Flex>
   );
 }
