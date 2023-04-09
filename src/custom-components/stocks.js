@@ -2,22 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { Table, TextField, Button, View } from '@aws-amplify/ui-react';
 import {Stock, Portfolio} from '../utils/Portfolio';
 
-const StockTable = ({ stocks, setStocks }) => {
-
+const StockTable = ({ portfolio, setPortfolio }) => {
+    console.log("Stock table")
+    console.log(portfolio)
     const [stockTotal, setStockTotal] = useState(0)
+    const [stocks, setStocks] = useState(portfolio?.stockList)
     useEffect(() => {
         //refresh page is stocks are updated
         console.log("Stocks value changed")
         console.log(stocks)
         let allocationSum = 0;
 
-        stocks.forEach((stock) => {
+        stocks?.forEach((stock) => {
             allocationSum += Number(stock.currentPosition);
             });
         console.log("stock total")
         console.log(allocationSum)
         setStockTotal(allocationSum.toFixed(2))
-    }, [stocks]);
+    });
     
   const handleChange = (event, index, field) => {
     const value = event.target.value;
@@ -27,6 +29,7 @@ const StockTable = ({ stocks, setStocks }) => {
       newStocks[index][field] = value;
       return newStocks;
     });
+    setPortfolio(new Portfolio(stocks, portfolio.portfolioName))
   };
 
   return (
@@ -41,7 +44,7 @@ const StockTable = ({ stocks, setStocks }) => {
         </tr>
       </thead>
       <tbody>
-        {stocks.map((stock, index) => (
+        {portfolio.stockList?.map((stock, index) => (
           <tr key={index}>
             <td>
               <input
@@ -71,27 +74,27 @@ const StockTable = ({ stocks, setStocks }) => {
             <td>
               <input
                 type="text"
-                readonly="readonly"
-                value={ stockTotal > 0 ? ((stock.currentPosition/ stockTotal) * 100).toFixed(2)  + "%": stockTotal}
+                readOnly="readonly"
+                value={ stockTotal > 0 ? ((Number(stock.currentPosition)/ stockTotal) * 100).toFixed(2)  + "%": stockTotal}
               />
             </td>
             <td>
               <input
                 className="stock-investment-input"
                 type="number"
-                readonly="readonly"
-                value={stock.investmentAllocation ? stock.investmentAllocation : "" }
+                readOnly="readonly"
+                value={stock.investmentAllocation ? Number(stock.investmentAllocation) : "" }
                 onChange={event => handleChange(event, index, 'investmentAllocation')}
               />
             </td>
           </tr>
         ))}
       <tr key={"totals"}>
-        <td>
+            <td>
               <input
                 className="stock-symbol-input"
                 type="text"
-                readonly="readonly"
+                readOnly="readonly"
                 value="Totals"
               />
             </td>
@@ -99,7 +102,7 @@ const StockTable = ({ stocks, setStocks }) => {
               <input
                 className="stock-allocation-input"
                 type="number"
-                readonly="readonly"
+                readOnly="readonly"
                 value={stocks?.reduce((acc, stock) => acc + stock.allocation, 0)}
               />
             </td>
@@ -107,15 +110,15 @@ const StockTable = ({ stocks, setStocks }) => {
               <input
                 className="stock-currentPosition-input"
                 type="number"
-                readonly="readonly"
-                value= {(stocks?.reduce((acc, stock) => acc + Number(stock?.currentPosition), 0)).toFixed(2) || ""}
+                readOnly="readonly"
+                value= {(stocks?.reduce((acc, stock) => acc + Number(stock?.currentPosition), 0)) || ""}
               />
             </td>
             
             <td>
               <input
                 type="text"
-                readonly="readonly"
+                readOnly="readonly"
                 value={ (stocks?.reduce((acc, stock) => acc + Number(stock.currentPosition), 0)/stockTotal)?.toFixed(2)*100 + "%"}
               />
             </td>
@@ -123,7 +126,7 @@ const StockTable = ({ stocks, setStocks }) => {
               <input
                 className="stock-investment-input"
                 type="number"
-                readonly="readonly"
+                readOnly="readonly"
                 value={(stocks?.reduce((acc, stock) => acc + Number(stock?.investmentAllocation),0))}
               />
             </td>
@@ -134,21 +137,20 @@ const StockTable = ({ stocks, setStocks }) => {
   );
 };
 
-const PortfolioForm = ({ stocks, setStocks }) => {
+const PortfolioForm = ({ portfolio, setPortfolio }) => {
   const [investmentAmount, setInvestmentAmount] = useState(0);
-  const [portfolio, setPortfolio] = useState(null);
 
   const handleSubmit = event => {
     console.log(`Handle investment`)
     event.preventDefault();
-    const portfolio = new Portfolio(stocks);
+    // const portfolio = new Portfolio(portfolio.stockList);
     portfolio.getStockAllocations(investmentAmount);
-    setPortfolio(portfolio);
-    setStocks(portfolio? portfolio.stockList : stocks);
+    setPortfolio(new Portfolio(portfolio.stockList, portfolio.portfolioName));
+    //setStocks(portfolio? portfolio.stockList : stocks);
   };
 
   const addInvestmentsToCurrentPosition = event => {
-    //event.preventDefault();
+    event.preventDefault();
     console.log("commiting")
     console.log(portfolio?.stockList)
     portfolio.stockList.forEach((stock, index) => {
@@ -157,17 +159,13 @@ const PortfolioForm = ({ stocks, setStocks }) => {
     })
     console.log(`portfolio stocklist`)
     console.log(portfolio.stockList)
-    setPortfolio(new Portfolio(portfolio.stockList));
-    setStocks(portfolio? portfolio.stockList.map(stock => new Stock(stock.ticker, stock.allocation, stock.currentPosition || 0)) : stocks);
+    setPortfolio(new Portfolio(portfolio.stockList, portfolio.portfolioName));
 
-    // console.log(`stocks`)
-    // console.log(stocks)
-    // setStocks(portfolio? portfolio.stockList : stocks);
   }
   return (
     <div style={{ maxWidth: '50%', width: '100%' }}>
       <form onSubmit={handleSubmit}>
-        <StockTable stocks={stocks} setStocks={setStocks} />
+        <StockTable portfolio={portfolio} setStocks={setPortfolio} />
         <div style={{ display: 'flex', alignItems: 'center', marginTop: '1rem' }}>
           <TextField
             type="number"
@@ -185,20 +183,19 @@ const PortfolioForm = ({ stocks, setStocks }) => {
   );
 };
 
-export const PortfolioDisplay = ({stockListRaw}) => {
-  console.log(typeof(stockListRaw))
-  const [stocks, setStocks] = useState(stockListRaw?.map(stock => new Stock(stock.symbol, stock.allocation, stock.currentPosition || 0)));
+export const PortfolioDisplay = ({portfolio, setPortfolio}) => {
+  // const [stocks, setStocks] = useState(portfolio.stockList?.map(stock => new Stock(stock.symbol, stock.allocation, stock.currentPosition || 0)));
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    console.log('Core Portfolio Stocks:', stocks);
-  };
+  // const handleSubmit = event => {
+  //   event.preventDefault();
+  //   console.log('Core Portfolio Stocks:', stocks);
+  // };
 
   return (
     <div style={{ maxWidth: '50%', width: '100%' }}>
-      <h2>Core Portfolio (Abel Portfolio)</h2>
-      <PortfolioForm stocks={stocks} setStocks={setStocks} />
-      <PortfolioActions portfolio={new Portfolio(stocks)} />
+      <h2>{portfolio?.portfolioName}</h2>
+      <PortfolioForm portfolio={portfolio} setPortfolio={setPortfolio} />
+      <PortfolioActions portfolio={portfolio} />
     </div>
   );
 };
@@ -255,20 +252,16 @@ const PortfolioActions = ({portfolio, setPortfolio}) =>{
   )
 }
 
-export const AggressivePortfolio = (stockListRaw) => {
-  const [stocks, setStocks] = useState(stockListRaw.map(stock => new Stock(stock.symbol, stock.allocation, stock.currentPosition || 0)));
+export const PortfoliosContainer = ({corePortfolioStockList, aggressivePortfolioStockList}) => {
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    console.log('Aggressive Portfolio Stocks:', stocks);
-  };
+  const [corePortfolio, setCorePortfolio] = useState(new Portfolio(corePortfolioStockList, "Core Portfolio"))
 
+  const [aggressivePortfolio, setAggressivePortfolio] = useState(new Portfolio(aggressivePortfolioStockList, "Aggressive Portfolio"))
 
   return (
-    <div style={{ maxWidth: '50%', width: '100%' }}>
-      <h2>Aggressive Portfolio</h2>
-      <PortfolioForm stocks={stocks} setStocks={setStocks} />
-      <PortfolioActions portfolio={new Portfolio(stocks)} />
-    </div>
-  );
-};
+    <View>
+      <PortfolioDisplay portfolio={corePortfolio} setPortfolio={setCorePortfolio} />
+      <PortfolioDisplay portfolio={aggressivePortfolio} setPortfolio={setAggressivePortfolio}/>
+    </View>
+  )
+}

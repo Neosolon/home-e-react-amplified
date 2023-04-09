@@ -23,7 +23,8 @@ import {
 } from './ui-components';
 import awsExports from "./aws-exports";
 import logo from "./logo.svg";
-import { PortfolioDisplay } from "./custom-components/stocks";
+import { PortfoliosContainer } from "./custom-components/stocks";
+import {Stock} from "./utils/Portfolio"
 Amplify.configure(awsExports);
 const initialState = { name: "", description: "" };
 //todo test if you can import custom mutations and queries and execute those. Then print value in console
@@ -120,11 +121,11 @@ const App = ({ signOut, user }) => {
   }
 
   const aggresivePortfolio =  [
-      { symbol: 'MSFT', allocation: 0.2 },
-      { symbol: 'PGR', allocation: 0.2 },
-      { symbol: 'TMF', allocation: 0.2 },
-      { symbol: 'TSLA', allocation: 0.4 },
-    ]
+      { symbol: 'GBTC', allocation: 0.258 },
+      { symbol: 'TSLA', allocation: 0.4474 },
+      { symbol: 'CELH', allocation: 0.1214},
+      { symbol: 'FNGU', allocation: 0.1732 },
+    ].map( stock => new Stock(stock.symbol, stock.allocation, 0 ))
 
   const corePortfolio =  [
     { symbol: 'MSFT', allocation: 0.0301 },
@@ -136,8 +137,9 @@ const App = ({ signOut, user }) => {
     { symbol: 'UVXY', allocation: 0.0198 },
     { symbol: 'EUO', allocation: 0.4031 },
     { symbol: 'SHOP', allocation: 0.0382 },
-  ]
+  ].map( stock => new Stock(stock.symbol, stock.allocation, 0 ))
 
+  console.log("in app.js")
   return (
     <Authenticator variation="modal" loginMechanisms={['email']}>
       {({ signOut, user }) => (
@@ -151,10 +153,7 @@ const App = ({ signOut, user }) => {
                   Sign out
                 </Button>
               </View>
-              <View>
-                <PortfolioDisplay stockListRaw={corePortfolio} />
-                <PortfolioDisplay stockListRaw={aggresivePortfolio}/>
-              </View>
+              <PortfoliosContainer corePortfolioStockList={corePortfolio} aggressivePortfolioStockList={aggresivePortfolio}/>
               {/* <LandingPage pageContents={landingPageContent(signOut)} /> */}
             </ThemeProvider>
           

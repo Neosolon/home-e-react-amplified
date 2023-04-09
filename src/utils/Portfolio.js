@@ -17,17 +17,22 @@ export class StockAction {
 }
 
 export class Portfolio {
-  constructor(stockList) {
+  constructor(stockList, name) {
+    console.log(`${name} received stockLIst`)
+    console.log(stockList)
     this._checkAllocationSum(stockList)
     this.stockList = stockList;
     this.total = this._calculatePorfolioTotal(stockList)
     this.totalInvestment = 0
+    this.portfolioName = name;
+    this.stockActions = []
   }
 
   _checkAllocationSum(stockList) {
     let allocationSum = this._calculatePorfolioTotalAllocations(stockList);
     
     if (Math.abs(allocationSum - 1.0) > 0.001) {
+        console.log(stockList)
       throw new Error(`Stock allocations must add up to 100% ${allocationSum}`);
     }
   }
@@ -35,7 +40,7 @@ export class Portfolio {
   _calculatePorfolioTotalAllocations(stockList) {
     let allocationSum = 0;
 
-    stockList.forEach((stock) => {
+    stockList?.forEach((stock) => {
         allocationSum += Number(stock.allocation);
         });
     return allocationSum
@@ -43,7 +48,7 @@ export class Portfolio {
   _calculatePorfolioTotal(stockList) {
     let allocationSum = 0;
 
-    stockList.forEach((stock) => {
+    stockList?.forEach((stock) => {
         allocationSum += Number(stock.currentPosition);
         });
     return allocationSum
