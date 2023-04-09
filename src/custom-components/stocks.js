@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, TextField, Button, View } from '@aws-amplify/ui-react';
-import {Stock, Portfolio} from '../utils/Portfolio';
+import {Stock, Portfolio, balancePortfolios} from '../utils/Portfolio';
 
 const StockTable = ({ portfolio, setPortfolio }) => {
     console.log("Stock table")
@@ -29,7 +29,7 @@ const StockTable = ({ portfolio, setPortfolio }) => {
       newStocks[index][field] = value;
       return newStocks;
     });
-    setPortfolio(new Portfolio(stocks, portfolio.portfolioName))
+    setPortfolio(new Portfolio(stocks, portfolio.portfolioName, portfolio.ratio, portfolio.stockActions))
   };
 
   return (
@@ -66,7 +66,7 @@ const StockTable = ({ portfolio, setPortfolio }) => {
               <input
                 className="stock-currentPosition-input"
                 type="number"
-                value={stock.currentPosition? Number(stock?.currentPosition) : ""}
+                value={stock.currentPosition? Number(stock?.currentPosition) : 0}
                 onChange={event => handleChange(event, index, 'currentPosition')}
               />
             </td>
@@ -83,7 +83,7 @@ const StockTable = ({ portfolio, setPortfolio }) => {
                 className="stock-investment-input"
                 type="number"
                 readOnly="readonly"
-                value={stock.investmentAllocation ? Number(stock.investmentAllocation) : "" }
+                value={stock.investmentAllocation ? Number(stock.investmentAllocation).toFixed(2) : 0 }
                 onChange={event => handleChange(event, index, 'investmentAllocation')}
               />
             </td>
@@ -111,7 +111,7 @@ const StockTable = ({ portfolio, setPortfolio }) => {
                 className="stock-currentPosition-input"
                 type="number"
                 readOnly="readonly"
-                value= {(stocks?.reduce((acc, stock) => acc + Number(stock?.currentPosition), 0)) || ""}
+                value= {(stocks?.reduce((acc, stock) => acc + Number(stock?.currentPosition), 0)?.toFixed(2)) || ""}
               />
             </td>
             
@@ -137,35 +137,58 @@ const StockTable = ({ portfolio, setPortfolio }) => {
   );
 };
 
-const PortfolioForm = ({ portfolio, setPortfolio }) => {
+const PortfolioForm = ({ portfolioA, setPortfolioA, portfolioB, setPortfolioB }) => {
   const [investmentAmount, setInvestmentAmount] = useState(0);
-
+  const investmentRatioCore = .9
   const handleSubmit = event => {
     console.log(`Handle investment`)
     event.preventDefault();
     // const portfolio = new Portfolio(portfolio.stockList);
-    portfolio.getStockAllocations(investmentAmount);
-    setPortfolio(new Portfolio(portfolio.stockList, portfolio.portfolioName));
+    portfolioA.getStockAllocations(investmentAmount*investmentRatioCore);
+    setPortfolioA(new Portfolio(portfolioA.stockList, portfolioA.portfolioName, portfolioA.ratio, portfolioA.stockActions));
+    portfolioB.getStockAllocations(investmentAmount*(1-investmentRatioCore));
+    setPortfolioB(new Portfolio(portfolioB.stockList, portfolioB.portfolioName, portfolioB.ratio, portfolioB.stockActions));
     //setStocks(portfolio? portfolio.stockList : stocks);
   };
 
   const addInvestmentsToCurrentPosition = event => {
     event.preventDefault();
     console.log("commiting")
-    console.log(portfolio?.stockList)
-    portfolio.stockList.forEach((stock, index) => {
-        portfolio.stockList[index].currentPosition = Number(stock.currentPosition) + Number(stock.investmentAllocation)
-        portfolio.stockList[index].investmentAllocation = 0
+    console.log(portfolioA?.stockList)
+    portfolioA.stockList.forEach((stock, index) => {
+        portfolioA.stockList[index].currentPosition = Number(stock.currentPosition) + Number(stock.investmentAllocation)
+        portfolioA.stockList[index].investmentAllocation = 0
     })
     console.log(`portfolio stocklist`)
-    console.log(portfolio.stockList)
-    setPortfolio(new Portfolio(portfolio.stockList, portfolio.portfolioName));
+    console.log(portfolioA.stockList)
+    setPortfolioA(new Portfolio(portfolioA.stockList, portfolioA.portfolioName, portfolioA.ratio, portfolioA.stockActions));
+
+    portfolioB.stockList.forEach((stock, index) => {
+        portfolioB.stockList[index].currentPosition = Number(stock.currentPosition) + Number(stock.investmentAllocation)
+        portfolioB.stockList[index].investmentAllocation = 0
+    })
+    setPortfolioB(new Portfolio(portfolioB.stockList, portfolioB.portfolioName, portfolioB.ratio, portfolioB.stockActions));
 
   }
+
+  const rebalancePortfolios = event =>{
+    const [portfolio, portfolio2] = balancePortfolios([portfolioA, portfolioB])
+    console.log("balanced portfolios")
+    console.log(portfolio)
+    console.log(portfolio2)
+    setPortfolioA(new Portfolio(portfolio.stockList, portfolio.portfolioName, portfolio.ratio, portfolio.stockActions));
+    setPortfolioB(new Portfolio(portfolio2.stockList, portfolio2.portfolioName, portfolio2.ratio, portfolio2.stockActions));
+    
+    // setPortfolioA(portfolio)
+    // setPortfolioB(portfolio2)
+    
+  }
   return (
-    <div style={{ maxWidth: '50%', width: '100%' }}>
+    <div style={{  display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      padding: '0 10px' }}>
       <form onSubmit={handleSubmit}>
-        <StockTable portfolio={portfolio} setStocks={setPortfolio} />
         <div style={{ display: 'flex', alignItems: 'center', marginTop: '1rem' }}>
           <TextField
             type="number"
@@ -176,6 +199,7 @@ const PortfolioForm = ({ portfolio, setPortfolio }) => {
           />
           <Button type="submit">Invest</Button>
           <Button onClick={addInvestmentsToCurrentPosition}>Commit Investment</Button>
+          <Button onClick={rebalancePortfolios}>Rebalance Portfolios</Button>
         </div>
         
       </form>
@@ -184,29 +208,40 @@ const PortfolioForm = ({ portfolio, setPortfolio }) => {
 };
 
 export const PortfolioDisplay = ({portfolio, setPortfolio}) => {
-  // const [stocks, setStocks] = useState(portfolio.stockList?.map(stock => new Stock(stock.symbol, stock.allocation, stock.currentPosition || 0)));
-
-  // const handleSubmit = event => {
-  //   event.preventDefault();
-  //   console.log('Core Portfolio Stocks:', stocks);
-  // };
 
   return (
-    <div style={{ maxWidth: '50%', width: '100%' }}>
-      <h2>{portfolio?.portfolioName}</h2>
-      <PortfolioForm portfolio={portfolio} setPortfolio={setPortfolio} />
-      <PortfolioActions portfolio={portfolio} />
+    <div style={{  display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      padding: '0 10px' }}>
+      <div style={{ maxWidth: '75%' }}>
+        <h2>{portfolio?.portfolioName}</h2>
+          <StockTable portfolio={portfolio} setStocks={setPortfolio} />
+      
+      </div>
+      <div style={{ maxWidth: '25%' }}>
+      
+      <PortfolioActions portfolio={portfolio} setPortfolio={setPortfolio} />
+      </div>
+
+      
     </div>
   );
 };
 
 const PortfolioActions = ({portfolio, setPortfolio}) =>{
-   const [showTable, setShowTable] = useState(false);
-   const [rebalanceResults, setRebalanceResults] = useState([]);
+  useEffect(() => {
+       console.log("updating portfolio actions")
+       console.log(portfolio)
+    });
+   const [showTable, setShowTable] = useState(true);
+   const [rebalanceResults, setRebalanceResults] = useState(portfolio?.stockActions || []);
   const rebalancePortfolio = (e) => {
       //
     let stockPlans = portfolio.rebalance_stocks(portfolio?.getTotal())
     setRebalanceResults(stockPlans);
+    portfolio.stockActions = stockPlans
+    setPortfolio(portfolio)
     setShowTable(true);
   };
   const handleShowTable = () => {
@@ -236,13 +271,13 @@ const PortfolioActions = ({portfolio, setPortfolio}) =>{
               </tr>
             </thead>
             <tbody>
-              {rebalanceResults.map((result) => (
+              {portfolio?.stockActions?.map((result) => (
                 <tr key={result.ticker}>
                   <td>{result.ticker}</td>
                   <td>{result.action}</td>
                   <td>{result.amount.toFixed(2)}</td>
                   <td>{result.finalAmount?.toFixed(2)}</td>
-                  <td>{(result.finalAmount/portfolio?.getTotal()).toFixed(4)}</td>
+                  <td>{(result.finalAmount/portfolio?.getStockActionTotal()).toFixed(4)}</td>
                 </tr>
               ))}
             </tbody>
@@ -253,15 +288,17 @@ const PortfolioActions = ({portfolio, setPortfolio}) =>{
 }
 
 export const PortfoliosContainer = ({corePortfolioStockList, aggressivePortfolioStockList}) => {
+  const investmentRatioCore = .9
 
-  const [corePortfolio, setCorePortfolio] = useState(new Portfolio(corePortfolioStockList, "Core Portfolio"))
+  const [corePortfolio, setCorePortfolio] = useState(new Portfolio(corePortfolioStockList, "Core Portfolio", investmentRatioCore ))
 
-  const [aggressivePortfolio, setAggressivePortfolio] = useState(new Portfolio(aggressivePortfolioStockList, "Aggressive Portfolio"))
+  const [aggressivePortfolio, setAggressivePortfolio] = useState(new Portfolio(aggressivePortfolioStockList, "Aggressive Portfolio", 1-investmentRatioCore))
 
   return (
     <View>
       <PortfolioDisplay portfolio={corePortfolio} setPortfolio={setCorePortfolio} />
       <PortfolioDisplay portfolio={aggressivePortfolio} setPortfolio={setAggressivePortfolio}/>
+      <PortfolioForm portfolioA={corePortfolio} portfolioB={aggressivePortfolio} setPortfolioA={setCorePortfolio} setPortfolio={setAggressivePortfolio} />
     </View>
   )
 }

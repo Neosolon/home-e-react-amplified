@@ -53,13 +53,6 @@ const App = ({ signOut, user }) => {
       console.log("error fetching todos "+ err);
       console.log(err[0]);
     }
-    // try{
-    //   console.log((graphqlOperation(getCustomer, {id: "jennifer_thomas"})))
-    //   const data = await API.graphql(graphqlOperation(getCustomerWithOrdersByStatusDate, {id: "jennifer_thomas"}))
-    //   console.log(data);
-    // }catch(err){
-    //   console.log(err);
-    // }
   }
 
   async function addTodo() {
@@ -125,7 +118,7 @@ const App = ({ signOut, user }) => {
       { symbol: 'TSLA', allocation: 0.4474 },
       { symbol: 'CELH', allocation: 0.1214},
       { symbol: 'FNGU', allocation: 0.1732 },
-    ].map( stock => new Stock(stock.symbol, stock.allocation, 0 ))
+    ].map( stock => new Stock(stock.symbol, stock.allocation, Math.random()*100 ))
 
   const corePortfolio =  [
     { symbol: 'MSFT', allocation: 0.0301 },
@@ -137,7 +130,7 @@ const App = ({ signOut, user }) => {
     { symbol: 'UVXY', allocation: 0.0198 },
     { symbol: 'EUO', allocation: 0.4031 },
     { symbol: 'SHOP', allocation: 0.0382 },
-  ].map( stock => new Stock(stock.symbol, stock.allocation, 0 ))
+  ].map( stock => new Stock(stock.symbol, stock.allocation, Math.random()*1000 ))
 
   console.log("in app.js")
   return (

@@ -17,7 +17,7 @@ export class StockAction {
 }
 
 export class Portfolio {
-  constructor(stockList, name) {
+  constructor(stockList, name, portfolioRatio, stockActions) {
     console.log(`${name} received stockLIst`)
     console.log(stockList)
     this._checkAllocationSum(stockList)
@@ -25,7 +25,8 @@ export class Portfolio {
     this.total = this._calculatePorfolioTotal(stockList)
     this.totalInvestment = 0
     this.portfolioName = name;
-    this.stockActions = []
+    this.stockActions = stockActions || []
+    this.ratio = portfolioRatio
   }
 
   _checkAllocationSum(stockList) {
@@ -58,10 +59,17 @@ export class Portfolio {
     return this._calculatePorfolioTotal(this.stockList)
   }
 
+  getStockActionTotal(){
+    return this.stockActions.reduce( (acc, stockAction) => acc += stockAction.finalAmount, 0)
+  }
+
   updateStockList(stockList){
     this._checkAllocationSum(stockList)
     this.stockList = stockList;
     this.total = this._calculatePorfolioTotal(stockList)
+  }
+  updateStockActions(stockPlans) {
+    this.stockActions = stockPlans
   }
 
   getStockAllocations(investment) {
@@ -95,67 +103,43 @@ export class Portfolio {
       const diff = stockPlan.targetValue - stockPlan.currentPosition;
       const amount = Math.abs(diff);
       let action = ""
-      if (diff > 0) {
+      if (amount < .01){
+        action = "hold"
+      }
+      else if (diff > 0) {
         action = 'buy';
       } else if (diff < 0) {
         action = 'sell';
         
-      } else {
-        action = 'hold';
+      } else{
+        action = "hold"
       }
       return new StockAction(stockPlan.ticker, action, amount, stockPlan.targetValue)
     });
   }
 }
 
-export function balancePortfolios(portfolios, stockValues) {
-  const totalPortfolioValue = portfolios.reduce((total, portfolio) => total + portfolio.currentValue, 0);
-  const totalValue = stockValues.reduce((total, stockValue) => total + stockValue.currentPosition, 0);
-  const totalInvestment = totalPortfolioValue + totalValue;
+export function balancePortfolios(portfolios) {
+    console.log(portfolios)
+  const stockValues = [...portfolios[0].stockList, ...portfolios[1].stockList]
+  const totalPortfolioValue = portfolios.reduce((total, portfolio) => total + portfolio.total, 0);
+  const totalValue = stockValues.reduce((total, stockValue) => total + Number(stockValue.currentPosition), 0);
+  const totalInvestment = totalValue;
 
   // Calculate target allocations for each portfolio
-  const portfolioAllocations = [];
-  portfolios.forEach((portfolio) => {
-    const targetAllocations = portfolio.getStockAllocations(totalInvestment);
-    portfolioAllocations.push({ portfolio, targetAllocations });
+  const rebalancePlans= [];
+  portfolios.forEach((portfolio, index) => {
+    const stock_plan = portfolio.rebalance_stocks(totalInvestment*portfolio.ratio);
+    portfolios[index].updateStockActions(stock_plan)
+    rebalancePlans.push({ portfolio, stock_plan});
   });
-
-  // Calculate target values for each stock
-  const targetStockValues = [];
-  stockValues.forEach((stockValue) => {
-    const targetValue = totalInvestment * stockValue.allocation;
-    targetStockValues.push({ ...stockValue, targetValue });
-  });
-
-  // Rebalance portfolios
-  const rebalancePlans = [];
-  portfolioAllocations.forEach(({ portfolio, targetAllocations }) => {
-    const currentStockValues = portfolio.stockList.map((stock) => ({
-      ticker: stock.ticker,
-      currentPosition: stock.currentPosition,
-      allocation: stock.allocation,
-    }));
-    const portfolioStockValues = currentStockValues.concat(targetStockValues);
-    const stockPlans = portfolio.rebalance_stocks(portfolioStockValues, totalInvestment);
-    rebalancePlans.push({ portfolio, stockPlans });
-  });
-
-  // Execute rebalance plans
-  const transactions = [];
-  rebalancePlans.forEach(({ portfolio, stockPlans }) => {
-    stockPlans.forEach((stockPlan) => {
-      if (stockPlan.action === 'buy') {
-        const amount = parseFloat(stockPlan.amount);
-        const transaction = { type: 'buy', ticker: stockPlan.ticker, amount };
-        transactions.push({ portfolio, transaction });
-      } else if (stockPlan.action === 'sell') {
-        const amount = parseFloat(stockPlan.amount);
-        const transaction = { type: 'sell', ticker: stockPlan.ticker, amount };
-        transactions.push({ portfolio, transaction });
-      }
-    });
-  });
-
-  return transactions;
+ console.log(rebalancePlans)
+  let transactions = []
+  rebalancePlans.forEach( ({portfolio, stock_plan}) => {
+    console.log(stock_plan)
+    transactions = transactions.concat(stock_plan)
+  })
+  console.log(transactions)
+  return portfolios
 }
 
