@@ -36,3 +36,29 @@
     transform: rotate(360deg);
   }
 }
+
+.stock-table {
+  width: 50%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.stock-table th,
+.stock-table td {
+  padding: 5px;
+  border: 1px solid #ddd;
+  text-align: left;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.stock-symbol-input,
+.stock-allocation-input {
+  width: 120px;
+  margin: 0;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}

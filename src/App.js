@@ -23,7 +23,7 @@ import {
 } from './ui-components';
 import awsExports from "./aws-exports";
 import logo from "./logo.svg";
-
+import { PortfolioDisplay } from "./custom-components/stocks";
 Amplify.configure(awsExports);
 const initialState = { name: "", description: "" };
 //todo test if you can import custom mutations and queries and execute those. Then print value in console
@@ -119,6 +119,25 @@ const App = ({ signOut, user }) => {
     )
   }
 
+  const aggresivePortfolio =  [
+      { symbol: 'MSFT', allocation: 0.2 },
+      { symbol: 'PGR', allocation: 0.2 },
+      { symbol: 'TMF', allocation: 0.2 },
+      { symbol: 'TSLA', allocation: 0.4 },
+    ]
+
+  const corePortfolio =  [
+    { symbol: 'MSFT', allocation: 0.0301 },
+    { symbol: 'PGR', allocation: 0.1937 },
+    { symbol: 'TMF', allocation: 0.0483 },
+    { symbol: 'TSLA', allocation: 0.0545 },
+    { symbol: 'UNH', allocation: 0.1474 },
+    { symbol: 'WTM', allocation: 0.0649 },
+    { symbol: 'UVXY', allocation: 0.0198 },
+    { symbol: 'EUO', allocation: 0.4031 },
+    { symbol: 'SHOP', allocation: 0.0382 },
+  ]
+
   return (
     <Authenticator variation="modal" loginMechanisms={['email']}>
       {({ signOut, user }) => (
@@ -131,6 +150,10 @@ const App = ({ signOut, user }) => {
                 <Button style={styles.button} onClick={signOut}>
                   Sign out
                 </Button>
+              </View>
+              <View>
+                <PortfolioDisplay stockListRaw={corePortfolio} />
+                <PortfolioDisplay stockListRaw={aggresivePortfolio}/>
               </View>
               {/* <LandingPage pageContents={landingPageContent(signOut)} /> */}
             </ThemeProvider>
