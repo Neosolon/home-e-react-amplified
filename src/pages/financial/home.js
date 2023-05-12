@@ -1,11 +1,10 @@
 import { useAuthenticator, Button } from '@aws-amplify/ui-react'
 import { useRouter } from 'next/router'
 import { Amplify } from 'aws-amplify'
-import config from '../../aws-exports'
 import { useEffect } from 'react'
 import { Stock } from '@/utils/Portfolio'
 import { PortfoliosContainer } from '@/components/Portfolio'
-Amplify.configure({ ...config, ssr: true })
+
 // import {Auth} from 'aws-amplify'
 function FinancialHomePage() {
   const router = useRouter()
