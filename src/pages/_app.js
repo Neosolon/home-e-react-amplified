@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from 'react'
 import NavBar from '@/ui-components/NavBar'
 import ResponsiveAppBar from '@/components/ResponsiveAppBar'
-// Amplify.configure({ ...config, ssr: true })
+Amplify.configure({ ...config, ssr: true })
 
 function MyApp({ Component, pageProps }) {
   // const [user, setUser] = useState(null);
