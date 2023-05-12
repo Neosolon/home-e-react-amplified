@@ -10,6 +10,8 @@ import {
   getOverrideProps,
   getOverridesFromVariants,
   mergeVariantsAndOverrides,
+  useAuthSignOutAction,
+  useNavigateAction,
 } from "@aws-amplify/ui-react/internal";
 import {
   Flex,
@@ -20,7 +22,7 @@ import {
   View,
 } from "@aws-amplify/ui-react";
 export default function NavBar(props) {
-  const { overrides: overridesProp, ...rest } = props;
+  const { label, overrides: overridesProp, ...rest } = props;
   const variants = [
     {
       overrides: {
@@ -47,6 +49,16 @@ export default function NavBar(props) {
     getOverridesFromVariants(variants, props),
     overridesProp || {}
   );
+  const dashboardOnClick = useNavigateAction({ type: "url", url: '"/"' });
+  const financesOnClick = useNavigateAction({
+    type: "url",
+    url: '"/financial/home"',
+  });
+  const nutritionOnClick = useNavigateAction({
+    type: "url",
+    url: '"/nutrition',
+  });
+  const scheduleOnClick = useAuthSignOutAction({ global: false });
   return (
     <Flex
       gap="20px"
@@ -88,6 +100,7 @@ export default function NavBar(props) {
           borderRadius="160px"
           padding="0px 0px 0px 0px"
           objectFit="cover"
+          src="/home_e_logo.jpg"
           {...getOverrideProps(overrides, "image_logo")}
         ></Image>
         <Text
@@ -148,6 +161,9 @@ export default function NavBar(props) {
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
           children="Dashboard"
+          onClick={() => {
+            dashboardOnClick();
+          }}
           {...getOverrideProps(overrides, "Dashboard")}
         ></Text>
         <Text
@@ -170,6 +186,9 @@ export default function NavBar(props) {
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
           children="Finances"
+          onClick={() => {
+            financesOnClick();
+          }}
           {...getOverrideProps(overrides, "Finances")}
         ></Text>
         <Text
@@ -192,6 +211,9 @@ export default function NavBar(props) {
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
           children="Nutrition"
+          onClick={() => {
+            nutritionOnClick();
+          }}
           {...getOverrideProps(overrides, "Nutrition")}
         ></Text>
         <Text
@@ -213,7 +235,10 @@ export default function NavBar(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Schedule"
+          children="SignOut"
+          onClick={() => {
+            scheduleOnClick();
+          }}
           {...getOverrideProps(overrides, "Schedule")}
         ></Text>
         <Icon
