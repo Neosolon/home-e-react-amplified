@@ -8,7 +8,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 // import FileViewer from 'react-file-viewer';
 export default function Home() {
-  const { user, signOut } = useAuthenticator()
+  const { user, signOut } = useAuthenticator((context) => [context.user])
   const router = useRouter()
 
   const signOutUser = () => {

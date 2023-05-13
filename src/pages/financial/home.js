@@ -8,7 +8,7 @@ import { PortfoliosContainer } from '@/components/Portfolio'
 // import {Auth} from 'aws-amplify'
 function FinancialHomePage() {
   const router = useRouter()
-  const { user, signOut } = useAuthenticator()
+  const { user, signOut } = useAuthenticator((context) => [context.user])
 
   useEffect(() => {
     console.log('logged in?')

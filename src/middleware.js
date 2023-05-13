@@ -18,8 +18,15 @@ export async function middleware(request) {
   try {
     // Check if the user is authenticated using Amplify
     console.log('user the request object to get the url', request.nextUrl)
+    let request_base = request.nextUrl.origin + '/'
+    console.log('IS DEV? ', process.env.IS_DEV != 'true')
+    if (request_base.includes('localhost') && process.env.IS_DEV != 'true') {
+      console.log('Using site url')
+      request_base = 'https://www.home-e.org/'
+    }
+    console.log('MIDDLEWARE: fetching from : ', request_base)
     const data = await (
-      await fetch(request.nextUrl.origin + '/api/check-user', {
+      await fetch(request_base + 'api/check-user', {
         headers: new Headers(request.headers),
       })
     ).json()

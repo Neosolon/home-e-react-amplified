@@ -20,7 +20,7 @@ function LoginPage() {
       console.log('uer exists redirecting to main page')
       router.push('/')
     }
-    console.log('no user allow login')
+    console.log('no user, allow login to proceed, no redirect')
   }, [user])
 
   return (
