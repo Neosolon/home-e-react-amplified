@@ -9,18 +9,20 @@ import { useEffect, useState } from 'react'
 import { loginComponents } from '@/components/LoginComponents'
 function LoginPage() {
   const router = useRouter()
-  const { user } = useAuthenticator()
+  const { user } = useAuthenticator((context) => [context.user])
 
-  // const [user, setUser] = useState(appUser);
+  const [appUser, setUser] = useState(user)
 
   useEffect(() => {
-    console.log('logged in?')
+    console.log('LogIn FOrm: logged in?')
     console.log(user)
-    if (user) {
-      console.log('uer exists redirecting to main page')
+    if (user && user != appUser) {
+      console.log('user exists redirecting to where they came from')
       router.back()
+    } else {
+      console.log('no user, allow login to proceed, no redirect')
+      setUser(user)
     }
-    console.log('no user, allow login to proceed, no redirect')
   }, [user])
 
   return (

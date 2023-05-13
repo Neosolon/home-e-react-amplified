@@ -1,7 +1,7 @@
 import { useAuthenticator, Button } from '@aws-amplify/ui-react'
 import { useRouter } from 'next/router'
 import { Amplify } from 'aws-amplify'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Stock } from '@/utils/PortfolioUtils'
 import { PortfoliosContainer } from '@/components/Portfolio'
 
@@ -11,16 +11,18 @@ function FinancialHomePage() {
   const { user, signOut } = useAuthenticator((context) => [context.user])
 
   useEffect(() => {
-    console.log('logged in?')
+    console.log('Financial HomePage: logged in?')
     console.log(user)
     if (!user) {
       console.log('FinancialHomePageuser dne redirecting to main page')
       router.push('/')
+    } else {
+      console.log('user allowed')
     }
-    console.log('user allowed')
   }, [user])
 
   const signOutUser = () => {
+    console.log('signing out user')
     signOut()
     router.push('/')
   }

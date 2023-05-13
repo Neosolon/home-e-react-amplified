@@ -19,7 +19,7 @@ const StockTable = ({ portfolio, setPortfolio }) => {
     console.log('stock total')
     console.log(allocationSum)
     setStockTotal(allocationSum.toFixed(2))
-  })
+  }, [stocks])
 
   const handleChange = (event, index, field) => {
     const value = event.target.value
@@ -325,11 +325,11 @@ export const PortfolioDisplay = ({ portfolio, setPortfolio }) => {
 }
 
 const PortfolioActions = ({ portfolio, setPortfolio }) => {
+  const [showTable, setShowTable] = useState(true)
   useEffect(() => {
     console.log('updating portfolio actions')
     // console.log(portfolio)
-  })
-  const [showTable, setShowTable] = useState(true)
+  }, [showTable])
   const [rebalanceResults, setRebalanceResults] = useState(
     portfolio?.stockActions || []
   )

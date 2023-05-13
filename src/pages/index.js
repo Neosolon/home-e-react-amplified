@@ -16,10 +16,10 @@ export default function Home() {
     router.push('/')
   }
 
-  useEffect(() => {
-    console.log('index refreshd: logged in?')
-    console.log(user)
-  }, [user])
+  // useEffect(() => {
+  //   console.log('index refreshd: logged in?')
+  //   console.log(user)
+  // }, [user])
 
   return (
     <main

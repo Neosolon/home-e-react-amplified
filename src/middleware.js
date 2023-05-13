@@ -19,7 +19,7 @@ export async function middleware(request) {
     // Check if the user is authenticated using Amplify
     console.log('user the request object to get the url', request.nextUrl)
     let request_base = request.nextUrl.origin + '/'
-    console.log('IS DEV? ', process.env.IS_DEV != 'true')
+    console.log('IS DEV? ', process.env.IS_DEV == 'true')
     if (request_base.includes('localhost') && process.env.IS_DEV != 'true') {
       console.log('Using site url')
       request_base = 'https://www.home-e.org/'
@@ -36,6 +36,7 @@ export async function middleware(request) {
       console.log('middleware not redirecting')
       return NextResponse.next()
     } else {
+      console.log('Accessing protected route redirecting to login')
       return NextResponse.redirect(new URL('/login', request.url))
     }
   } catch (error) {

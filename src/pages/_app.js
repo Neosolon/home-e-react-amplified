@@ -69,13 +69,11 @@ function MyApp({ Component, pageProps }) {
           referrerpolicy="no-referrer"
         />
       </Head>
+      {isLoading && <Loader />}
       <Authenticator.Provider>
         <ThemeProvider colorMode="dark">
-          <View>
-            <ResponsiveAppBar width={'100vw'} />
-            {isLoading && <Loader />}
-            <Component {...pageProps} />
-          </View>
+          <ResponsiveAppBar width={'100vw'} />
+          <Component {...pageProps} />
         </ThemeProvider>
       </Authenticator.Provider>
     </>
