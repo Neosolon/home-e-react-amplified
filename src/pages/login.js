@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import { loginComponents } from '@/components/LoginComponents'
 function LoginPage() {
   const router = useRouter()
-  const { user } = useAuthenticator((context) => [context.user])
+  const { user } = useAuthenticator()
 
   // const [user, setUser] = useState(appUser);
 

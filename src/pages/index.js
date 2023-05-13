@@ -1,4 +1,4 @@
-import { Button, useAuthenticator } from '@aws-amplify/ui-react'
+import { Button, Heading, useAuthenticator } from '@aws-amplify/ui-react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -29,7 +29,11 @@ export default function Home() {
         name="viewport"
         content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1"
       />
-      {/* {user && <Button onClick={() => signOutUser()}>signOut</Button>} */}
+      {user && (
+        <Heading level={3} margin={'20px 0'}>
+          Welcome to the Home-E
+        </Heading>
+      )}
       <Document file="/DH_Resume_2023.pdf">
         <Page pageNumber={1} renderTextLayer={false} />
       </Document>

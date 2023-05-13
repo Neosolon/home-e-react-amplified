@@ -7,6 +7,11 @@ import {
   Button,
 } from '@aws-amplify/ui-react'
 import Image from 'next/image'
+import Router from 'next/router'
+
+const routeHome = () => {
+  Router.push('/')
+}
 export const loginComponents = {
   //   Header() {
   //     const { tokens } = useTheme()
@@ -77,6 +82,14 @@ export const loginComponents = {
       const { tokens } = useTheme()
       return (
         <View textAlign="center" padding={tokens.space.medium}>
+          <Button
+            fontWeight="normal"
+            onClick={routeHome}
+            size="small"
+            variation="link"
+          >
+            Go Home
+          </Button>
           <Button
             fontWeight="normal"
             onClick={toResetPassword}

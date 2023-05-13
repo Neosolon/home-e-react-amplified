@@ -10,14 +10,15 @@ import { useRouter } from 'next/router'
 export default function NavBar() {
   const router = useRouter()
   const { user, signOut } = useAuthenticator((context) => [context.user])
-  useEffect(() => {
-    signOut()
-    router.push('/')
 
-    return () => {
-      second
+  const handleSignOn = () => {
+    if (user) {
+      signOut()
+      router.push('/')
+    } else {
+      router.push('/login')
     }
-  }, [user])
+  }
 
   return (
     <Flex
@@ -40,7 +41,11 @@ export default function NavBar() {
       <View>
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/finances/home">Finances</Link>
-        {user && <Button onClick={signOut}>Sign Out</Button>}
+        {user && (
+          <Button onClick={() => handleSignOn()}>
+            {user ? 'Sign Out' : signIn}
+          </Button>
+        )}
       </View>
     </Flex>
   )

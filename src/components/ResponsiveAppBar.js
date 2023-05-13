@@ -18,14 +18,23 @@ import { useAuthenticator } from '@aws-amplify/ui-react'
 import { useWindowSize } from '@/custom_hooks/useWindowSize'
 
 const pages = ['About', 'Financials', 'Scheduling']
-const settings = ['Setting Dashboard', 'Logout']
+const settings = ['Setting Dashboard']
 
 function ResponsiveAppBar() {
   const router = useRouter()
-  const { signOut } = useAuthenticator()
+  const { user, signOut } = useAuthenticator()
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
 
+  const getSettings = () => {
+    const fullSettings = settings.slice()
+    if (user) {
+      fullSettings.push('Logout')
+    } else {
+      fullSettings.push('Login')
+    }
+    return fullSettings
+  }
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
@@ -43,8 +52,8 @@ function ResponsiveAppBar() {
 
   const size = useWindowSize()
 
-  const handleAppBarNavigation = (label) => {
-    handleCloseNavMenu()
+  const handleAppBarNavigation = (label, event) => {
+    handleCloseUserMenu()
     switch (label) {
       case 'About':
         router.push('/about')
@@ -55,9 +64,15 @@ function ResponsiveAppBar() {
       case 'Scheduling':
         router.push('/scheduling/home')
         break
+      case 'Login':
+        console.log('Signing in reroute')
+        router.push('/login')
+        break
       case 'Logout':
         console.log('Signing out')
         signOut()
+        router.push('/')
+        break
       default:
         router.push('/')
         break
@@ -127,7 +142,7 @@ function ResponsiveAppBar() {
               {pages.map((page) => (
                 <MenuItem
                   key={page}
-                  onClick={() => handleAppBarNavigation(page)}
+                  onClick={(event) => handleAppBarNavigation(page, event)}
                 >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
@@ -166,7 +181,7 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={() => handleAppBarNavigation(page)}
+                onClick={(event) => handleAppBarNavigation(page, event)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -196,10 +211,10 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {getSettings().map((setting) => (
                 <MenuItem
                   key={setting}
-                  onClick={() => handleAppBarNavigation(setting)}
+                  onClick={(event) => handleAppBarNavigation(setting, event)}
                 >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
