@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
+
 // import FileViewer from 'react-file-viewer';
 export default function Home() {
   const { user, signOut } = useAuthenticator()
@@ -24,6 +25,10 @@ export default function Home() {
     <main
       className={`containerBackgroundImage min-h-screen flex-col justify-between p-24`}
     >
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1"
+      />
       {/* {user && <Button onClick={() => signOutUser()}>signOut</Button>} */}
       <Document file="/DH_Resume_2023.pdf">
         <Page pageNumber={1} renderTextLayer={false} />
