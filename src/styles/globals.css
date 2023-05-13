@@ -26,6 +26,13 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.containerCenterJustified {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  flex-direction: column;
+}
 .containerBackgroundImage {
   display: flex;
   align-items: center;

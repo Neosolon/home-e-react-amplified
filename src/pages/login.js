@@ -18,7 +18,7 @@ function LoginPage() {
     console.log(user)
     if (user) {
       console.log('uer exists redirecting to main page')
-      router.push('/')
+      router.back()
     }
     console.log('no user, allow login to proceed, no redirect')
   }, [user])

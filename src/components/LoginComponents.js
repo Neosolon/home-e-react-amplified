@@ -57,6 +57,7 @@ export const loginComponents = {
           <Heading
             // padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
             level={3}
+            // padding={'0 0 20 0'}
           >
             Welcome to the Home-E.
           </Heading>

@@ -16,13 +16,14 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useAuthenticator } from '@aws-amplify/ui-react'
 import { useWindowSize } from '@/custom_hooks/useWindowSize'
+import Link from 'next/link'
 
 const pages = ['About', 'Financials', 'Scheduling']
 const settings = ['Setting Dashboard']
 
 function ResponsiveAppBar() {
   const router = useRouter()
-  const { user, signOut } = useAuthenticator()
+  const { user, signOut } = useAuthenticator((context) => [context.user])
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
 
@@ -52,7 +53,8 @@ function ResponsiveAppBar() {
 
   const size = useWindowSize()
 
-  const handleAppBarNavigation = (label, event) => {
+  const handleAppBarNavigation = (label) => {
+    handleCloseNavMenu()
     handleCloseUserMenu()
     switch (label) {
       case 'About':
@@ -92,23 +94,26 @@ function ResponsiveAppBar() {
               objectFit="contain"
             />
           )}
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            HOME-E
-          </Typography>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Link
+              // variant="h6"
+              // noWrap
+              // component="a"
+              // href="/"
+              // sx={{
+              //   mr: 2,
+              //   display: { xs: 'none', md: 'flex' },
+              //   fontFamily: 'monospace',
+              //   fontWeight: 700,
+              //   letterSpacing: '.3rem',
+              //   color: 'inherit',
+              //   textDecoration: 'none',
+              // }}
+              href="/"
+            >
+              HOME-E
+            </Link>
+          </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -142,7 +147,7 @@ function ResponsiveAppBar() {
               {pages.map((page) => (
                 <MenuItem
                   key={page}
-                  onClick={(event) => handleAppBarNavigation(page, event)}
+                  onClick={() => handleAppBarNavigation(page)}
                 >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
@@ -159,10 +164,31 @@ function ResponsiveAppBar() {
             />
           )}
           {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-          <Typography
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <Link
+              // variant="h6"
+              // noWrap
+              // component="a"
+              // href="/"
+              // sx={{
+              //   mr: 2,
+              //   display: { xs: 'none', md: 'flex' },
+              //   fontFamily: 'monospace',
+              //   fontWeight: 700,
+              //   letterSpacing: '.3rem',
+              //   color: 'inherit',
+              //   textDecoration: 'none',
+              // }}
+              href="/"
+            >
+              HOME-E
+            </Link>
+          </Box>
+          {/* <Typography
             variant="h5"
             noWrap
             component="a"
+            // onClick={() => handleAppBarNavigation(null)}
             href="/"
             sx={{
               mr: 2,
@@ -176,12 +202,12 @@ function ResponsiveAppBar() {
             }}
           >
             HOME-E
-          </Typography>
+          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={(event) => handleAppBarNavigation(page, event)}
+                onClick={() => handleAppBarNavigation(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -214,7 +240,7 @@ function ResponsiveAppBar() {
               {getSettings().map((setting) => (
                 <MenuItem
                   key={setting}
-                  onClick={(event) => handleAppBarNavigation(setting, event)}
+                  onClick={() => handleAppBarNavigation(setting)}
                 >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
