@@ -9,9 +9,7 @@ import {
   useAuthenticator,
 } from '@aws-amplify/ui-react'
 import { useEffect, useState } from 'react'
-import NavBar from '@/ui-components/NavBar'
 import ResponsiveAppBar from '@/components/ResponsiveAppBar'
-import Nprogress from 'nprogress'
 import Router from 'next/router'
 import Head from 'next/head'
 import Loader from '@/components/loader'

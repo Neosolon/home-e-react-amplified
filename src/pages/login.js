@@ -16,7 +16,7 @@ function LoginPage() {
   useEffect(() => {
     console.log('LogIn FOrm: logged in?')
     console.log(user)
-    if (user && user != appUser) {
+    if (user) {
       console.log('user exists redirecting to where they came from')
       router.back()
     } else {

@@ -32,6 +32,7 @@ export { default as HeroLayout3 } from "./HeroLayout3";
 export { default as CommentCard } from "./CommentCard";
 export { default as DashProfileAndCard } from "./DashProfileAndCard";
 export { default as FeaturesText2x2 } from "./FeaturesText2x2";
+export { default as About } from "./About";
 export { default as FAQItem } from "./FAQItem";
 export { default as LandingPageLight } from "./LandingPageLight";
 export { default as NavBar } from "./NavBar";
