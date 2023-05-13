@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Table, TextField, Button, View } from '@aws-amplify/ui-react'
-import { Stock, Portfolio, balancePortfolios } from '../utils/Portfolio'
+import { Stock, Portfolio, balancePortfolios } from '../utils/PortfolioUtils'
 
 const StockTable = ({ portfolio, setPortfolio }) => {
   console.log('Stock table')
-  console.log(portfolio)
+  // console.log(portfolio)
   const [stockTotal, setStockTotal] = useState(0)
   const [stocks, setStocks] = useState(portfolio?.stockList)
   useEffect(() => {
     //refresh page is stocks are updated
     console.log('Stocks value changed')
-    console.log(stocks)
+    // console.log(stocks)
     let allocationSum = 0
 
     stocks?.forEach((stock) => {
@@ -215,14 +215,14 @@ const PortfolioForm = ({
   const addInvestmentsToCurrentPosition = (event) => {
     event.preventDefault()
     console.log('commiting')
-    console.log(portfolioA?.stockList)
+    // console.log(portfolioA?.stockList)
     portfolioA.stockList.forEach((stock, index) => {
       portfolioA.stockList[index].currentPosition =
         Number(stock.currentPosition) + Number(stock.investmentAllocation)
       portfolioA.stockList[index].investmentAllocation = 0
     })
     console.log(`portfolio stocklist`)
-    console.log(portfolioA.stockList)
+    // console.log(portfolioA.stockList)
     setPortfolioA(
       new Portfolio(
         portfolioA.stockList,
@@ -250,8 +250,8 @@ const PortfolioForm = ({
   const rebalancePortfolios = (event) => {
     const [portfolio, portfolio2] = balancePortfolios([portfolioA, portfolioB])
     console.log('balanced portfolios')
-    console.log(portfolio)
-    console.log(portfolio2)
+    // console.log(portfolio)
+    // console.log(portfolio2)
     setPortfolioA(
       new Portfolio(
         portfolio.stockList,
@@ -327,7 +327,7 @@ export const PortfolioDisplay = ({ portfolio, setPortfolio }) => {
 const PortfolioActions = ({ portfolio, setPortfolio }) => {
   useEffect(() => {
     console.log('updating portfolio actions')
-    console.log(portfolio)
+    // console.log(portfolio)
   })
   const [showTable, setShowTable] = useState(true)
   const [rebalanceResults, setRebalanceResults] = useState(

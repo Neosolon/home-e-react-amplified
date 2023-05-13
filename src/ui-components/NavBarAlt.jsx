@@ -117,6 +117,8 @@ export default function NavBarAlt(props) {
         {...getOverrideProps(overrides, "DashButtonContainer")}
       >
         <Button
+          width="unset"
+          height="unset"
           shrink="0"
           size="default"
           isDisabled={false}
@@ -125,6 +127,8 @@ export default function NavBarAlt(props) {
           {...getOverrideProps(overrides, "ButtonDash")}
         ></Button>
         <Button
+          width="unset"
+          height="unset"
           shrink="0"
           size="default"
           isDisabled={false}
@@ -133,6 +137,8 @@ export default function NavBarAlt(props) {
           {...getOverrideProps(overrides, "ButtonSecond")}
         ></Button>
         <Button
+          width="unset"
+          height="unset"
           shrink="0"
           size="default"
           isDisabled={false}

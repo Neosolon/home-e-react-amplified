@@ -128,6 +128,8 @@ export default function HeroLayout3(props) {
           ></Text>
         </Flex>
         <Button
+          width="unset"
+          height="unset"
           shrink="0"
           size="large"
           isDisabled={false}

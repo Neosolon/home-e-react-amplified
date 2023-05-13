@@ -177,6 +177,7 @@ export default function ReviewCard(props) {
         </Flex>
         <Divider
           width="40px"
+          height="1px"
           shrink="0"
           size="small"
           orientation="horizontal"
@@ -249,6 +250,8 @@ export default function ReviewCard(props) {
           ></Text>
         </Flex>
         <Badge
+          width="unset"
+          height="unset"
           shrink="0"
           size="small"
           variation="default"
@@ -281,6 +284,8 @@ export default function ReviewCard(props) {
             {...getOverrideProps(overrides, "Rating29766840")}
           >
             <Rating
+              width="unset"
+              height="unset"
               shrink="0"
               size="large"
               {...getOverrideProps(overrides, "Rating29766841")}

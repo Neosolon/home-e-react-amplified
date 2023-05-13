@@ -874,6 +874,7 @@ export default function SideBar(props) {
         >
           <Divider
             width="385px"
+            height="1px"
             shrink="0"
             size="small"
             orientation="horizontal"

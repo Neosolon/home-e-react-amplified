@@ -26,8 +26,6 @@ export declare type NavBarOverridesProps = {
     image_profile?: PrimitiveOverrideProps<ImageProps>;
 } & EscapeHatchProps;
 export declare type NavBarProps = React.PropsWithChildren<Partial<FlexProps> & {
-    label?: String;
-} & {
     property1?: "Default";
 } & {
     overrides?: NavBarOverridesProps | undefined | null;

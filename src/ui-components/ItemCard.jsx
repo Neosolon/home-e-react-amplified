@@ -25,6 +25,8 @@ export default function ItemCard(props) {
       {...rest}
     >
       <Badge
+        width="unset"
+        height="unset"
         gap="0"
         shrink="0"
         size="small"

@@ -19,7 +19,7 @@ export class StockAction {
 export class Portfolio {
   constructor(stockList, name, portfolioRatio, stockActions) {
     console.log(`${name} received stockLIst`)
-    console.log(stockList)
+    // console.log(stockList)
     this._checkAllocationSum(stockList)
     this.stockList = stockList
     this.total = this._calculatePorfolioTotal(stockList)

@@ -97,6 +97,8 @@ export default function ProductCard(props) {
           {...getOverrideProps(overrides, "Ratings")}
         >
           <Rating
+            width="unset"
+            height="unset"
             shrink="0"
             size="large"
             {...getOverrideProps(overrides, "Rating")}
@@ -137,6 +139,8 @@ export default function ProductCard(props) {
           {...getOverrideProps(overrides, "Tags")}
         >
           <Badge
+            width="unset"
+            height="unset"
             shrink="0"
             size="small"
             variation="default"
@@ -144,6 +148,8 @@ export default function ProductCard(props) {
             {...getOverrideProps(overrides, "Badge29766804")}
           ></Badge>
           <Badge
+            width="unset"
+            height="unset"
             shrink="0"
             size="small"
             variation="default"
@@ -151,6 +157,8 @@ export default function ProductCard(props) {
             {...getOverrideProps(overrides, "Badge29766805")}
           ></Badge>
           <Badge
+            width="unset"
+            height="unset"
             shrink="0"
             size="small"
             variation="default"
@@ -235,6 +243,7 @@ export default function ProductCard(props) {
         </Flex>
         <Divider
           width="unset"
+          height="1px"
           shrink="0"
           alignSelf="stretch"
           size="small"

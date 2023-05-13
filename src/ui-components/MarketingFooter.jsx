@@ -348,6 +348,8 @@ export default function MarketingFooter(props) {
           )}
         ></Text>
         <TextField
+          width="300px"
+          height="unset"
           shrink="0"
           label="Label"
           placeholder="Placeholder"

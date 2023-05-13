@@ -123,6 +123,8 @@ export default function HeroLayout4(props) {
           {...getOverrideProps(overrides, "Form")}
         >
           <TextField
+            width="300px"
+            height="unset"
             shrink="0"
             placeholder="Placeholder"
             size="default"
@@ -132,6 +134,8 @@ export default function HeroLayout4(props) {
             {...getOverrideProps(overrides, "TextField")}
           ></TextField>
           <Button
+            width="unset"
+            height="unset"
             shrink="0"
             size="default"
             isDisabled={false}

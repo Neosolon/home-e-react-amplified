@@ -145,6 +145,8 @@ export default function ProfileCard(props) {
         ></Text>
       </Flex>
       <Button
+        width="unset"
+        height="unset"
         shrink="0"
         alignSelf="stretch"
         size="large"

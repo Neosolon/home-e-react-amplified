@@ -24,6 +24,8 @@ export default function DashProfile(props) {
       {...rest}
     >
       <SearchField
+        width="300px"
+        height="unset"
         shrink="0"
         placeholder="Placeholder"
         size="default"

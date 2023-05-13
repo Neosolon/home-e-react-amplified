@@ -95,8 +95,9 @@ export default function FormCheckout(props) {
               {...getOverrideProps(overrides, "Info")}
             ></Text>
             <TextField
-              label="Name"
               width="unset"
+              height="unset"
+              label="Name"
               shrink="0"
               alignSelf="stretch"
               placeholder="Placeholder"
@@ -107,8 +108,9 @@ export default function FormCheckout(props) {
               {...getOverrideProps(overrides, "TextField29767009")}
             ></TextField>
             <TextField
-              label="Title"
               width="unset"
+              height="unset"
+              label="Title"
               shrink="0"
               alignSelf="stretch"
               placeholder="Placeholder"
@@ -121,6 +123,7 @@ export default function FormCheckout(props) {
           </Flex>
           <Divider
             width="unset"
+            height="1px"
             shrink="0"
             alignSelf="stretch"
             size="small"
@@ -162,8 +165,9 @@ export default function FormCheckout(props) {
               {...getOverrideProps(overrides, "Shipping29767013")}
             ></Text>
             <TextField
-              label="Street address"
               width="unset"
+              height="unset"
+              label="Street address"
               shrink="0"
               alignSelf="stretch"
               placeholder="Placeholder"
@@ -174,8 +178,9 @@ export default function FormCheckout(props) {
               {...getOverrideProps(overrides, "TextField29767014")}
             ></TextField>
             <TextField
-              label="Zip code"
               width="unset"
+              height="unset"
+              label="Zip code"
               shrink="0"
               alignSelf="stretch"
               placeholder="Placeholder"
@@ -186,8 +191,9 @@ export default function FormCheckout(props) {
               {...getOverrideProps(overrides, "TextField29767015")}
             ></TextField>
             <TextField
-              label="Country"
               width="unset"
+              height="unset"
+              label="Country"
               shrink="0"
               alignSelf="stretch"
               placeholder="Placeholder"
@@ -214,6 +220,8 @@ export default function FormCheckout(props) {
         {...getOverrideProps(overrides, "Frame 412")}
       >
         <Badge
+          width="unset"
+          height="unset"
           shrink="0"
           alignSelf="stretch"
           size="default"
@@ -293,6 +301,7 @@ export default function FormCheckout(props) {
         </Flex>
         <Divider
           width="unset"
+          height="1px"
           shrink="0"
           alignSelf="stretch"
           size="small"
@@ -475,6 +484,7 @@ export default function FormCheckout(props) {
         </Flex>
         <Divider
           width="unset"
+          height="1px"
           shrink="0"
           alignSelf="stretch"
           size="small"
@@ -539,6 +549,7 @@ export default function FormCheckout(props) {
         </Flex>
         <Divider
           width="unset"
+          height="1px"
           shrink="0"
           alignSelf="stretch"
           size="small"
@@ -546,6 +557,8 @@ export default function FormCheckout(props) {
           {...getOverrideProps(overrides, "Divider29767065")}
         ></Divider>
         <Button
+          width="unset"
+          height="unset"
           shrink="0"
           alignSelf="stretch"
           size="large"

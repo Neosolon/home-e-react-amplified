@@ -7,17 +7,18 @@ import { NextResponse } from 'next/server'
 export async function middleware(request) {
   // let SSR = withSSRContext({request});
   // return NextResponse.next();
-  console.log('MIDLLEWARE: current url')
+  console.log('MIDDLEWARE: current url', process.env?.SITE_URL)
   // console.log(request.url)
   console.log(request.nextUrl.pathname)
   if (request.nextUrl.pathname == '/') {
+    console.log('MIDDLEWARE: home page continue')
     return NextResponse.next()
   }
   // return NextResponse.next();
   try {
     // Check if the user is authenticated using Amplify
     const data = await (
-      await fetch('http://localhost:3000/api/check-user', {
+      await fetch(process.env?.SITE_URL + 'api/check-user', {
         headers: new Headers(request.headers),
       })
     ).json()

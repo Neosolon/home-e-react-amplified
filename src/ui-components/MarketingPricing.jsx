@@ -99,6 +99,8 @@ export default function MarketingPricing(props) {
             {...getOverrideProps(overrides, "$0/mo")}
           ></Text>
           <Button
+            width="unset"
+            height="unset"
             shrink="0"
             alignSelf="stretch"
             size="large"
@@ -422,6 +424,8 @@ export default function MarketingPricing(props) {
             {...getOverrideProps(overrides, "$100/mo")}
           ></Text>
           <Button
+            width="unset"
+            height="unset"
             shrink="0"
             alignSelf="stretch"
             size="large"
@@ -745,6 +749,8 @@ export default function MarketingPricing(props) {
             {...getOverrideProps(overrides, "Contact us")}
           ></Text>
           <Button
+            width="unset"
+            height="unset"
             shrink="0"
             alignSelf="stretch"
             size="large"

@@ -2,7 +2,7 @@ import { useAuthenticator, Button } from '@aws-amplify/ui-react'
 import { useRouter } from 'next/router'
 import { Amplify } from 'aws-amplify'
 import { useEffect } from 'react'
-import { Stock } from '@/utils/Portfolio'
+import { Stock } from '@/utils/PortfolioUtils'
 import { PortfoliosContainer } from '@/components/Portfolio'
 
 // import {Auth} from 'aws-amplify'

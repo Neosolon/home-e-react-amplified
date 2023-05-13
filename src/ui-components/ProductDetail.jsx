@@ -135,6 +135,7 @@ export default function ProductDetail(props) {
           </Flex>
           <Divider
             width="unset"
+            height="1px"
             shrink="0"
             alignSelf="stretch"
             size="small"
@@ -205,6 +206,7 @@ export default function ProductDetail(props) {
           </Flex>
           <Divider
             width="unset"
+            height="1px"
             shrink="0"
             alignSelf="stretch"
             size="small"
@@ -328,6 +330,8 @@ export default function ProductDetail(props) {
           {...getOverrideProps(overrides, "Frame 27")}
         >
           <Rating
+            width="unset"
+            height="unset"
             shrink="0"
             size="default"
             {...getOverrideProps(overrides, "Rating")}
@@ -369,6 +373,7 @@ export default function ProductDetail(props) {
         >
           <Button
             width="371px"
+            height="unset"
             position="absolute"
             top="189px"
             left="0px"
@@ -393,6 +398,7 @@ export default function ProductDetail(props) {
           >
             <Button
               width="75px"
+              height="unset"
               shrink="0"
               size="large"
               isDisabled={true}
@@ -402,6 +408,7 @@ export default function ProductDetail(props) {
             ></Button>
             <Button
               width="75px"
+              height="unset"
               shrink="0"
               size="large"
               isDisabled={false}
@@ -411,6 +418,7 @@ export default function ProductDetail(props) {
             ></Button>
             <Button
               width="74px"
+              height="unset"
               shrink="0"
               size="large"
               isDisabled={false}
@@ -420,6 +428,7 @@ export default function ProductDetail(props) {
             ></Button>
             <Button
               width="75px"
+              height="unset"
               shrink="0"
               size="large"
               isDisabled={false}
@@ -442,8 +451,9 @@ export default function ProductDetail(props) {
             {...getOverrideProps(overrides, "Frame 2829766978")}
           >
             <Button
-              gap="24px"
               width="75px"
+              height="unset"
+              gap="24px"
               shrink="0"
               size="large"
               isDisabled={false}
@@ -452,8 +462,9 @@ export default function ProductDetail(props) {
               {...getOverrideProps(overrides, "Button29766979")}
             ></Button>
             <Button
-              gap="24px"
               width="75px"
+              height="unset"
+              gap="24px"
               shrink="0"
               size="large"
               isDisabled={false}
@@ -462,8 +473,9 @@ export default function ProductDetail(props) {
               {...getOverrideProps(overrides, "Button29766980")}
             ></Button>
             <Button
-              gap="24px"
               width="74px"
+              height="unset"
+              gap="24px"
               shrink="0"
               size="large"
               isDisabled={false}
@@ -472,8 +484,9 @@ export default function ProductDetail(props) {
               {...getOverrideProps(overrides, "Button29766981")}
             ></Button>
             <Button
-              gap="24px"
               width="75px"
+              height="unset"
+              gap="24px"
               shrink="0"
               size="large"
               isDisabled={false}

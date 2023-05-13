@@ -38,6 +38,8 @@ export default function DashProfileAndCardAlt(props) {
         {...getOverrideProps(overrides, "DashProfile")}
       >
         <SearchField
+          width="300px"
+          height="unset"
           shrink="0"
           placeholder="Placeholder"
           size="default"
